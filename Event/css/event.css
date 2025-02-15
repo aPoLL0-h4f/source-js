@@ -1,0 +1,26 @@
+/* click */
+.button{
+    padding: 20px;
+    color: white;
+    background-color: #ffa400;
+    border: 0;
+    margin: 50px auto;
+    width: 200px;
+    display: block;
+    cursor: pointer;
+}
+
+body{
+    height: 500vh;
+}
+
+/* keydown */
+.input{
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    width: 300px;
+    margin: 50px auto;
+    display: block;
+}

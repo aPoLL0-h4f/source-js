@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>coursesjson</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./coursesjson.css" />
+  </head>
+  <body>
+    <!-- method="delete"  -->
+    <form class="form-post" autocomplete="off" method="post">
+      <input type="text" name="image" placeholder="Image url" required />
+      <input type="text" name="title" placeholder="Enter Your title" required />
+      <input
+        type="text"
+        name="author"
+        placeholder="Enter Your author"
+        required
+      />
+      <input
+        type="text"
+        name="rating"
+        placeholder="Rating"
+        min="1"
+        max="5"
+        required
+      />
+      <input type="text" name="price" placeholder="Price" min="1" required />
+      <div>
+        <label for="best-seller">Best Seller</label>
+        <input type="checkbox" name="bestSeller" id="" />
+      </div>
+      <input type="text" name="buyAmout" placeholder="Buy Amout" value="0" />
+      <button type="submit" class="form-submit">Add course</button>
+    </form>
+    <input type="text" class="filter" name="filter" />
+    <div class="course-list"></div>
+
+    <script src="./coursesjson.js"></script>
+  </body>
+</html>

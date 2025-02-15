@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "this is example of title",
+      "description": " Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus veritatis quos quis unde ut qui temporibus exercitationem consectetur officia eligendi iusto saepe magni placeat perspiciatis ad, nisi ullam obcaecati esse!"
+    },
+    {
+      "title": "Vo thuy Kha",
+      "author": "Nike",
+      "id": 2
+    }
+  ],
+  "courses": [
+    {
+      "image": "https://plus.unsplash.com/premium_photo-1668208363137-a4b550d42503?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "title": "Husky Image",
+      "author": "AI Sweight",
+      "rating": 5,
+      "price": 0,
+      "bestSeller": true,
+      "buyAmout": 1000,
+      "id": 1
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1512723185835-0700e5069a9a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHB1Z3xlbnwwfHwwfHx8MA%3D%3D",
+      "title": "Pug Image",
+      "author": "Bruce Galpin",
+      "rating": 5,
+      "price": 100,
+      "bestSeller": true,
+      "buyAmout": 500,
+      "id": 2
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}

@@ -1,0 +1,118 @@
+*{
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* CSS phần ActiveModal */
+.modal{
+    background-color: rgba(0, 0 ,0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all linear 0.25s;
+}
+
+.modal.is-show{
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content{
+    background-color: aliceblue;
+    width: 400px;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.icon{
+    width: 100%;
+    text-align: right;
+    font-size: 20px;
+    transition: linear 0.25s;
+}
+
+.icon:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.modal-desc{
+    margin: 10px 0;
+}
+
+.modal-action{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.modal-submit,
+.modal-cancel{
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 20px 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #ccc;
+}
+
+.modal-submit{
+    background-color: #3d6ef7;
+    color: white;
+}
+
+
+/* CSS phần Notification */
+
+.noti{
+    position: fixed;
+    left: 15px;
+    bottom: 15px;
+    display: flex;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 8px;
+    max-width: 400px;
+    height: 130px;
+    transform: translateY(150%);
+    animation: noti forwards 1 linear 4s;
+}
+@keyframes noti{
+    20%,
+    80%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(150%);
+    }
+}
+
+.noti-image{
+    width: 100px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.noti-content{
+    padding: 10px;
+}
+
+.noti-title{
+    font-weight: bold;
+}
+
+.noti-desc{
+    line-height: 1.4;
+    margin-top: 5px;
+    display: inline-block;
+}
