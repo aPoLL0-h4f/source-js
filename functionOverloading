@@ -1,0 +1,97 @@
+// funtion overloading là funtion sẽ có trùng tên , có số lượng đối số truyền vào là giống nhau hoặc khác nhau, nhưng type thì có thể khác nhau
+// EX:
+function total(a: number, b: number): number {}
+function total(a: string, b: string): string {}
+
+function total(a: any, b: any) {
+  return a + b;
+}
+
+total(5, 7); // 12
+total("a", "b"); // ab
+
+// EX
+interface Coordinate {
+  x: number;
+  y: number;
+}
+
+// TH1: trả về object
+function parseCoodinateFromObject(obj: Coordinate): Coordinate {
+  return {
+    ...obj,
+  };
+}
+
+// TH2: trả về x và y thôi chớ ko phải object
+function parseCoodinateFromObject(x: number, y: number): Coordinate {
+  return { x, y };
+}
+
+// cả 2 cái này đều trả ra đúng, nhưng viết như này quá dài
+parseCoodinateFromObject({ x: 10, y: 20 });
+parseCoodinateFromObject(10, 20);
+
+// viết như này
+// đây là 2 TH chúng ta muốn sử lý
+function parseCoodinate(obj: Coordinate): Coordinate;
+function parseCoodinate(x: number, y: number): Coordinate;
+// TH cuối cùng là chúng ta muốn xử lý như thế này
+function parseCoodinate(arg1: any, arg2?: any): Coordinate {
+  let coord = {
+    x: arg1 as Number,
+    y: arg2 as Number,
+  };
+
+  if (typeof arg1 === "object") {
+    coord = {
+      ...(arg1 as Coordinate),
+    };
+  } else {
+    coord = {
+      x: arg1 as Number,
+      y: arg2 as Number,
+    };
+  }
+  return coord;
+}
+
+// -----------function type-----------
+//Funtion promise
+const fetchData = (url: string): Promise<string> =>
+  Promise.resolve(`get ${url}`);
+
+//Funtion Rest parameter
+function information(id: number, ...names: string[]): string {
+  return `${id} ${names.join(" ")}`;
+}
+
+information(1, "phan", "dat");
+
+//Funtion With Callback
+function handleFile(text: string, callback: () => void): void {
+  console.log(text);
+  callback();
+}
+
+//Funtion Param with parem
+// Funtion as type
+type UpdateArray = (n: number) => number;
+
+function handleFileArray(
+  number: number[],
+  //   filter: (n: number) => number thay vì dùng như này thì ta dùng function as type
+  filter: UpdateArray
+): number[] {
+  return number.map((item) => filter(item));
+}
+
+handleFileArray([1, 2, 3, 4, 5], (n) => n * 5); //5 10 15 20 25
+
+// Function return function
+function handleValue(val: number): (n: number) => number {
+  return (n: number) => n * val;
+}
+
+const value = handleValue(5);
+console.log(value(10)); //50

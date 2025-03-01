@@ -1,0 +1,41 @@
+// nó giống ternary operator trong js (condition ? true: false)
+
+// conditional someType extends otherType ? true : false
+type someType<T> = T extends string ? true : false;
+type someValue = someType<string>; // true
+// có thể ktr nhiều đk
+// type someType<T> = T extends string ? true : T extends number ? number : any;
+
+// CHÚ Ý cái kết quả cuối cùng chúng ta đạt được đó là Union Type-------------
+// type case5 = someType<string | number>; 
+// Kết quả: true | false
+
+
+// ------- infer
+// nó sẽ suy luận ra kiểu của T
+//nếu làm như này thì dài quá
+// type someType<T> = T extends string ? string : false;
+// type someType<T> = T extends number ? number : false;
+
+//nên ta sẽ dùng infer
+type MyInfer<T> = T extends infer R ? R : false;
+
+//EX
+type UseMyInfer1 = MyInfer<string>;
+type UseMyInfer2 = MyInfer<{
+  age: number;
+}>;
+
+// Kết hợp với mapped
+type OptionFlags<T> = {
+  [P in keyof T]: T[P] extends () => void ? P : never;
+}[keyof T];
+//[keyof T] trong trường hợp này là lấy ra những cái valid hợp lệ của cái T
+
+interface MyStudent {
+  name: string;
+  age: number;
+  updateName: () => void;
+}
+// muốn ktr trong cái MyStudent có 1 cái key nào là function hay ko thì trả ra cái tên key đó
+type MyStudentConditional = OptionFlags<MyStudent>;

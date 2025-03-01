@@ -1,0 +1,133 @@
+// ------------Utility Type--------------
+
+// PARTIAL------------------------------------
+// interface Todo {
+//   title: string;
+//   description: string;
+// }
+
+// function updateTodo(todo: Todo, newTodo: Todo) {
+//   return {
+//     ...todo,
+//     ...newTodo,
+//   };
+// }
+
+// console.log(
+//   updateTodo(
+//     {
+//       title: "hi",
+//       description: "hhhhhh",
+//     },
+//     {
+//       title: "hi2",
+//       description: "hhhhhh2",
+//     }
+//   )
+// );
+// thì khi console ra nó chỉ ra kq là như này thôi { title: "hi2",description: "hhhhhh2"} vì nó sẽ bị đè vì cùng kiểu là Todo, nhưng ko phải khi nào nó cũng bị đè
+// TH2:
+interface Todo {
+  title: string;
+  description: string;
+}
+
+// nếu đối số newTodo mà muốn dùng những thuộc tính như todo mà là optional ? thì có thể dùng partial
+// khi dùng nó sẽ tương tự như này
+// interface Todo {
+//   title?: string;
+//   description?: string;
+// }
+
+function updateTodo(todo: Todo, newTodo: Partial<Todo>) {
+  return {
+    ...todo,
+    ...newTodo,
+  };
+}
+
+console.log(
+  updateTodo(
+    {
+      title: "hi",
+      description: "hhhhhh",
+    },
+    {}
+  )
+);
+
+// REQUIRED------------------------------------
+// tức là nó sẽ biến những cái trong interface của chúng ta đang là ? thì sẽ trở thành là bắt buộc
+interface Props {
+  isActive?: boolean;
+}
+// const compA: Required<Props> ={} sai vì ko thêm isActive
+
+// READONLY------------------------------------
+// tức là nó sẽ biến những cái trong interface thì chỉ lấy ra để sử dụng thôi, và nó ko gán lại đc
+interface Book {
+  name: string;
+}
+
+const x: Readonly<Book> = {
+  name: "hi",
+};
+// x.name = "hello"; lỗi vì ko đc gán lại
+
+// RECORD------------------------------------
+// Xây dựng một loại đối tượng có các khóa thuộc tính là các khóa và giá trị
+type CatName = "miffy" | "boris" | "mordred";
+
+interface CatInfo {
+  age: number;
+  breed: string;
+}
+
+const cats: Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: "Persian" },
+  boris: { age: 5, breed: "Maine Coon" },
+  mordred: { age: 16, breed: "British Shorthair" },
+};
+console.log(cats.boris);
+
+// Pick------------------------------------
+interface Todos {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
+// pick có nghĩa là mình sẽ lấy những cái key mà mình muốn thôi, như ở dưới thì mình sẽ lấy cái title và completed của todos
+// type TodoPreview = Pick<Todos, "title" | "completed">;
+
+// const todo: TodoPreview = {
+//   title: "Clean room",
+//   completed: false,
+// };
+
+// Omit------------------------------------
+// nó sẽ loại trừ 1 thuộc tính nào đó ra khỏi interface
+interface Todoomit {
+  title: string;
+  description: string;
+  completed: boolean;
+  createdAt: number;
+}
+
+type TodoPreviewOmit = Omit<Todoomit, "description" | "createdAt">;
+
+const todo: TodoPreviewOmit = {
+  title: "Clean room",
+  completed: false,
+};
+
+// Exclude------------------------------------Exclude<UnionType, ExcludedMembers>
+// tức là nó sẽ loại trừ những cái ExcludedMembers nằm trong UnionType
+type T0 = Exclude<"a" | "b" | "c", "a">; //  cái này nó sẽ loại trừ a thì T0 còn "b" | "c"
+
+// Extract------------------------------------Extract<Type, Union>
+// tức là nó sẽ kiểm tra Union xem ở thằng Type có những thằng nào như Union ko thì nó sẽ lấy thằng đó
+type T1 = Extract<"a" | "b" | "c", "a" | "f">; // cái này nó sẽ ktr có a nên T1 sẽ có a và những thằng khác thì vứt
+
+// NonNullable------------------------------------NonNullable<Type>
+type T2 = NonNullable<string[] | null | undefined>; // nó sẽ loại trừ null và undefined chỉ chừa lại string[]

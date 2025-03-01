@@ -1,0 +1,28 @@
+//Tuple có nghĩa là 1 mảng các phần tử và kiểu dữ liệu CỐ ĐỊNH trong các phân tử đó
+// VD: [number , string] thì -> [123,"hi"] => đúng , còn -> ["hi", 123] => sai // kiểu như nó cố định thứ tự luôn
+
+// sử dụng trong function thì như thế nào
+type ThreeDCoordinate = [x: Number, y: number, z:number];
+function add3DCoordinate(c1: ThreeDCoordinate, c2:ThreeDCoordinate) : ThreeDCoordinate{
+    return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
+
+}
+
+add3DCoordinate([1,100,200], [200,400,600])
+
+
+// khi sử dụng với useState
+// useState 
+const [value , setValue] = useState('evondev')
+
+function simpleUseState(value: string) : [() => string, (v: string) => void] {
+
+    return [() => value, (v: string) => {
+        value = v;
+    }]
+}
+
+const [value, setValue] = simpleUseState("evondev");
+console.log(value())
+setValue("Develop")
+console.log(value())

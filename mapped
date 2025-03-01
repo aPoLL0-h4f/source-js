@@ -1,0 +1,130 @@
+// type Developer = {
+//   name: string;
+// };
+
+// const dat: Developer = {
+//   name: "Frontend",
+
+//   // nếu thêm key như này nhưng ở interface Developer ko có thì phải lên khai báo thêm, nhưng làm như vậy dài quá ta sẽ sử dụng cách này
+//   age:29,
+//   gender: "male",
+//   school: "Cao thang"
+// };
+
+type Developer = {
+  name: string;
+  [key: string]: any; // có thể thêm như này
+};
+
+const dat: Developer = {
+  name: "Frontend",
+  age: 29,
+  gender: "male",
+  school: "Cao thang",
+};
+
+//---------------------------------------------------------------------------------
+// LƯU Ý : Property cũng có thể đổi đc thay vì Property thì để P
+// mapped type là 1 kiểu generic type, thông thường sẽ đc tạo thông qua các keyof để tạo ra các type đó
+type OptionsFlags<T> = {
+  [Property in keyof T]: boolean; // typeof nghĩa là nếu mà truyền vào key thì sẽ trả ra 1 mảng key đó còn Property in keyof tức là từng key trong mảng key đó
+  // tức là sẽ chuyển những cái Property trong T sang boolean
+  // còn nếu vẫn muốn giữ nguyên kiểu thì
+  // [Property in keyof T]: T[Property];
+};
+
+// T ở vd dưới là ["darkMode", "newUserProfile"]
+type Features = {
+  darkMode: () => void;
+  newUserProfile: () => void;
+};
+
+type FeatureOptions = OptionsFlags<Features>;
+// khúc này thành
+//   {
+//     darkMode: boolean;
+//     newUserProfile: boolean;
+//   };
+
+///----------------Mapping Modifiers
+// thêm tiền tố - hoặc +
+//  - để xóa
+//  + để thêm
+
+// cái này có nghĩa là xóa readonly ra khỏi các thuộc tính trong T
+type CreateMutable<T> = {
+  -readonly [Property in keyof T]: T[Property]; // T[Property] tức là giữ nguyên type ko thay đổi
+};
+
+// type này chỉ đọc thôi và nó ko thể sửa
+type LockedAccount = {
+  readonly id: string;
+  readonly name: string;
+};
+type UnlockedAccount = CreateMutable<LockedAccount>;
+
+//EX2:
+type Concrete<T> = {
+  [P in keyof T]-?: T[P];
+};
+
+type MaybeUser = {
+  id: string;
+  name?: string;
+  age?: number;
+};
+
+type User = Concrete<MaybeUser>;
+
+///----------------Key Remapping via as
+// dùng để ép sang dưới dạng template literal: `abc ${variable}`
+// type MappedTypeWithNewProperties<T> = {
+//   [P in keyof T as NewKeyType]: T[P];
+// };
+
+type Getters<T> = {
+  [P in keyof T as `on${Capitalize<string & P>}Change`]: (value: T[P]) => T[P];
+};
+
+// Capitalize là chữ đầu in hoa , và bắc buộc phải thêm string
+
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
+// person như trên làm cách nào để ép nó về như này
+// onNameChange: (value: string) => string
+// onAgeChange: (value: number) => number
+// onLocationChange: (value: string) => string
+// thì viết như này
+// type Getters<T> = {
+//   [P in keyof T as `on${Capitalize<string & P>}Change`]: (value: T[P]) => T[P];
+// };
+
+// nhưng nếu có thêm thuộc tính nữa như này
+// onNameForcus: (value: string) => string
+// onAgeForcus: (value: number) => number
+// onLocationForcus: (value: string) => string
+// thì làm như này
+// type Getters<T> = {
+//   [P in keyof T as `on${Capitalize<string & P>}Change`]: (value: T[P]) => T[P];
+// } & {
+// [P in keyof T as `on${Capitalize<string & P>}Forcus`]: (value: T[P]) => T[P]
+// };
+
+type LazyPerson = Getters<Person>;
+
+// --------------------- remove
+// tức là cái dưới đây nó sẽ loại bỏ kind ra khỏi
+
+type RemoveKindField<T> = {
+  [P in keyof T as Exclude<P, "kind">]: T[P];
+};
+
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+
+type KindlessCircle = RemoveKindField<Circle>;

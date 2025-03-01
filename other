@@ -1,0 +1,35 @@
+// in ktr 1 cái key trong 1 object có tồn tại hay ko
+function log(obj: { name: string } | { age: number }) {
+  if ("name" in obj) {
+    console.log(obj.name);
+  }
+
+  if ("age" in obj) {
+    console.log(obj.age);
+  }
+}
+
+// typeof
+const myStudent = {
+  id: 1,
+  name: "dat",
+  age: 28,
+};
+// type Student = myStudent  để như này sẽ bị lỗi
+type Student = typeof myStudent; // typeof nghĩa là trả về những cái type của property trong dối tượng chúng ta muốn
+// {
+//     id: number;
+//     name: string;
+//     age: number;
+// }
+
+// EX
+// const query = `/home?name=phandat&age=21`;
+// type Query = typeof query; // type này là `/home?name=phandat&age=21`; vì nó tự hiểu query là const cố định ko thay đổi đc hiểu nó là string literal type (tóm lại const → TypeScript giữ nguyên giá trị cụ thể)
+// let query = `/home?name=phandat&age=21`; khi này type sẽ khác nó sẽ đc gán là string vì let có thể thay đổi giá trị đc
+
+
+
+// keyof
+// nó sẽ trả ra những cái key và kết quả là union Type
+type Student2 = keyof typeof myStudent; //  "name" | "age" | "id"

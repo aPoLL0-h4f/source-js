@@ -1,0 +1,98 @@
+// function simpleUseState(value: string): [() => string, (v: string) => void] {
+//   return [
+//     () => value,
+//     (v: string) => {
+//       value = v;
+//     },
+//   ];
+// }
+
+// const [value, setValue] = simpleUseState("evondev");
+// console.log(value());
+// setValue("Develop");
+// console.log(value());
+
+// nếu viết như trên thì nó sẽ chỉ truyền vào đc là string thôi, optimize lại
+// impleUseState<T>  khai báo nó là generic <T> -> cái chữ trong <> đặt chữ gì cũng đc
+function simpleUseState<T>(value: T): [() => T, (v: T) => void] {
+  return [
+    () => value,
+    (v: T) => {
+      value = v;
+    },
+  ];
+}
+
+const [value, setValue] = simpleUseState("evondev");
+const [value1, setValue1] = simpleUseState(22);
+
+// EX
+interface IRank<R> {
+  item: R;
+  rank: number;
+}
+
+function ranker<R>(items: R[], rankCallback: (v: R) => number): R[] {
+  const ranks: IRank<R>[] = items.map((item) => ({
+    item,
+    rank: rankCallback(item),
+  }));
+
+  ranks.sort((a, b) => a.rank - b.rank);
+  return ranks.map((rank) => rank.item);
+}
+
+// console.log(ranker([1, 2, 3, 4, 5], (number) => number * 5));
+
+//EX
+interface ILanguage {
+  name: string;
+  difficulty: number;
+}
+
+const languages: ILanguage[] = [
+  {
+    name: "ReactJS",
+    difficulty: 60,
+  },
+  {
+    name: "Angular",
+    difficulty: 70,
+  },
+  {
+    name: "VueJS",
+    difficulty: 80,
+  },
+];
+
+const rank = ranker(languages, ({ difficulty }) => difficulty);
+console.log(rank);
+
+// ---------------keyof-----------
+// trả về những cái key của 1 cái mảng hay 1 object nào đó
+const devices = [
+  {
+    name: "iphone",
+    price: 1000,
+  },
+  {
+    name: "iPad",
+    price: 2000,
+  },
+  {
+    name: "Macbook",
+    price: 3000,
+  },
+];
+
+// nếu mà truyền vào key là name thì kq là ["iphone", "iPad", "Macbook"]
+// nếu mà truyền vào key là price thì kq là [1000,2000,3000]
+
+// A là đâu vào là 1 cái mảng
+// B là key
+// B extends keyof A có nghĩa là B sẽ là những cái key của object A(VD: A là 1 object)
+function getDevicesKey<A, B extends keyof A>(items: A[], key: B): A[B][] {
+  return items.map((item) => item[key]);
+}
+
+console.log(getDevicesKey(devices, "price")); //  [1000,2000,3000]

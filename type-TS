@@ -1,0 +1,103 @@
+// khai bao don gian
+const age: number = 30;
+
+// name: (string | number)[]
+//khai bao obj
+const item: {
+  name: string;
+  address: {
+    lastname: string;
+  };
+} = {
+  name: "dat",
+  address: {
+    lastname: "hello",
+  },
+};
+
+// khai bao arr
+const item2: {
+  name: string;
+  address: {
+    lastname: string;
+  };
+}[] = [
+  {
+    name: "dat",
+    address: {
+      lastname: "hello",
+    },
+  },
+];
+
+//--------------Tuple, enum, any, union types, unknow ,never types
+
+//Tuple có nghĩa là 1 mảng các phần tử và kiểu dữ liệu CỐ ĐỊNH trong các phân tử đó
+// VD: [number , string] thì -> [123,"hi"] => đúng , còn -> ["hi", 123] => sai // kiểu như nó cố định thứ tự luôn
+
+//--------------Enum có nghĩa là dữ liệu cố định mình đặt ra
+//VD:
+enum Permission {
+  //   ADMIN,  ko điền giá trị thì nó sẽ là index và index thì bắt đầu = 0
+  //   EDITOR,
+  ADMIN = "ADMIN",
+  EDITOR = "EDITOR",
+}
+//kq
+// const enum:{
+//     permission: Permission
+// } = {
+//     permission: Permission.ADMIN
+// }
+
+//--------------Any là kiểu dữ liệu bất kỳ(cái gì cũng đc), nhưng ko khuyến khích hạn chế dùng
+//vd
+const item3: any[] = [
+  {
+    name: "dat",
+    address: {
+      lastname: "hello",
+    },
+  },
+];
+
+//--------------unknow là ko biết,  về cơ bản thì cũng same như any
+let aNumber: unknown;
+aNumber = 100; // là kiểu data ko biết nhưng ta thấy nó được gán là 100 thì ta sẽ nghĩ nhầm
+aNumber.toFixed(2); // muốn có 2 số ở phía sau nghĩa là 100.00 nhưng ko đc
+// khắc phục bằng cách ktr typeof, đó là điểm khác nhau với any
+if (typeof aNumber === "number") {
+  aNumber.toFixed(2);
+}
+
+//-------------- never types là ko chứa 1 giá trị nào cả, thường đại diện cho 1 cái function trả ra 1 cái lỗi
+
+//vd1:
+function raiseError(err: string): never {
+  throw new Error(err);
+}
+//vd2:
+function reject() {
+  return raiseError("error");
+}
+//vd3: 1 function mà ko có dừng lại lặp vô tận
+
+//--------------Union nghĩa là hoặc có thể là kiểu data này hoặc là kiểu data kia
+const item4: {
+  name: number | string;
+} = {
+  name: 12345,
+};
+
+/* --------------Literal type là chứa các giá trị cố định, nó cũng như thằng tuple như ko phải là array
+    type Age = 18 | 30 | "40" // nghĩa là chỉ được sử dụng 3 giá trị này thôi
+
+*/
+
+/* --------------function
+     kiểu dữ liệu có : number, void,....
+    function total(a: number, b:number): kiểu dữ liệu {
+        ....
+    }
+
+*/

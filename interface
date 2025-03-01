@@ -1,0 +1,60 @@
+// inteface trong ts là cho phép chúng ta định nghĩa thuộc tính và phương thức chúng ta là gì, mà đối tượng cần implement,
+
+// const product: {
+//   name: string;
+//   brand: string;
+//   color: string;
+// } = {
+//   name: "car",
+//   brand: "bmw",
+//   color: "red",
+// };
+// function addProduct(product: { name: string; brand: string; color: string }) {}
+// addProduct(product);
+// có thể thấy có 2 chỗ dùng 2 lần, bị trùng
+// {
+//   name: string;
+//   brand: string;
+//   color: string;
+// }
+
+// thì sẽ sử dụng interface
+interface Product {
+  name: string;
+  brand: string;
+  color: string;
+}
+const product: Product = {
+  name: "car",
+  brand: "bmw",
+  color: "red",
+};
+function addProduct(product: Product) {}
+addProduct(product);
+
+// có thể dùng extends để kế thừa từ interface cha
+// khi mà 2 interface có tên giống nhau thì nó sẽ tự merge lại
+interface Product {
+  speed?: string;
+}
+
+// -----------intersaction type -----------
+// là &, nó sẽ có cả 2 cái
+interface Product2 {
+  name: string;
+  brand: string;
+  color: string;
+}
+interface Product3 {
+  speed?: string;
+}
+
+type FinalProduct = Product2 & Product3; // lúc này nó có cả giá trị product 2  và 3
+//có rất nhiều cách, có thể tạo 2 cái giống nhau, hoặc là extends hoặc là intersaction
+
+// -----------Type casting-----------
+//  as nó sẽ convert 1 cái element sang 1 cái type khác ,khi mà sử dụng liên quan đến DOM
+const x = document.querySelector(".input") as HTMLInputElement; // kiểu như này
+
+//----------- Type assertion-----------
+//  as nó sẽ ép sang 1 type nhất định mà mình muốn
